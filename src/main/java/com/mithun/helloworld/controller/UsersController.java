@@ -1,5 +1,6 @@
 package com.mithun.helloworld.controller;
 
+import com.mithun.helloworld.dto.SaveUsersDto;
 import com.mithun.helloworld.model.Users;
 import com.mithun.helloworld.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,17 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
-    @GetMapping
-    public ResponseEntity<List<String>> getUsers(){
-        return new ResponseEntity<>(usersService.getUsers(), HttpStatus.OK);
-    }
-
     @PostMapping
-    public ResponseEntity <String> saveUsers(Users user){
+    public ResponseEntity <String> saveUsers(@RequestBody SaveUsersDto user){
         return new ResponseEntity<>(usersService.saveUsers(user),HttpStatus.OK);
+    }
+//    @GetMapping
+//    public ResponseEntity<List<Users>> getUsers(){
+//        return new ResponseEntity<>(usersService.getUsers(),HttpStatus.OK);
+//    }
+
+    @GetMapping
+    public ResponseEntity<Users> getUserById( @RequestParam String id){
+        return new ResponseEntity<>(usersService.getUserById(id),HttpStatus.OK);
     }
 }

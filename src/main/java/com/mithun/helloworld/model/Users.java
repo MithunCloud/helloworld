@@ -1,14 +1,12 @@
 package com.mithun.helloworld.model;
 
-import com.sun.xml.internal.bind.v2.runtime.Name;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name="users",schema = "test1")
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private String dept;

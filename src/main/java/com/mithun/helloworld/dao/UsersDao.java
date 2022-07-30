@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 
 @Repository
-public interface UsersDao extends JpaRepository<Users, Long>{
+public interface UsersDao extends JpaRepository<Users, Integer>{
 
 }
