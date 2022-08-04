@@ -1,24 +1,39 @@
 package com.mithun.helloworld.service;
 
-import com.mithun.helloworld.dao.CustomersDao;
-import com.mithun.helloworld.dao.ProductsDao;
-import com.mithun.helloworld.dto.WorldDto;
-import com.mithun.helloworld.model.Customers;
-import com.mithun.helloworld.model.Products;
+import com.mithun.helloworld.dto.AddOrdersRequestDto;
+import com.mithun.helloworld.dto.AddProductsRequestDto;
+import com.mithun.helloworld.dto.ProductsResponseDto;
+import com.mithun.helloworld.model.Product;
+import com.mithun.helloworld.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProductsService {
     @Autowired
-    private ProductsDao productsDao;
-    public String saveProducts(WorldDto user) {
+    private ProductsRepository productsDao;
+
+    public ProductsResponseDto insertProducts(AddProductsRequestDto addProductsRequestDto) {
         {
-            Products products = new Products();
-            products.setName(user.getName());
-            products.setDescription((user.getDescription()));
-            productsDao.save(products);
-            return ("Sucess");
+            Product product = new Product();
+            product.setName(addProductsRequestDto.getName());
+            product.setDescription((addProductsRequestDto.getDesc()));
+            product= productsDao.save(product);
+            return ProductsResponseDto.builder().id(product.getId()).build();
         }
+    }
+
+    public ProductsResponseDto getProducts() {
+        List<Product> productsList = new ArrayList<>();
+        productsList =productsDao.findAll();
+        return ProductsResponseDto.builder().productList(productsList).build();
+    }
+
+    public Product getProductId(AddOrdersRequestDto addOrdersRequestDto) {
+        Product product = productsDao.getReferenceById(addOrdersRequestDto.getProductId());
+        return product;
     }
 }
